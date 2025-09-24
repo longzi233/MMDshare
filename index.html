@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dragonseed VIDEO</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 3rem;
+      font-family: "Cinzel", serif;
+      padding: 20px 0;
+      z-index: 1000;
+      font-weight: bold;
+      transition: color 0.5s;
+    }
+
+    header {
+      margin-top: 100px;
+      text-align: center;
+    }
+
+    .gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+.card {
+  background: none;      
+  border: none;          
+  box-shadow: none;      
+  border-radius: 0;      
+  padding: 0;            
+  text-align: center;    
+  margin-bottom: 40px;   
+}
+
+.card img {
+  width: 100%;        
+  max-width: 1000px; /* 限制最大宽度 */
+  margin: 0 auto;
+  display: block;
+}
+
+    .card h2 {
+      margin: 15px 0 10px;
+      padding: 8px;
+      border-radius: 6px;
+      transition: background 0.5s, color 0.5s;
+      display: inline-block;
+    }
+
+    .card p {
+      margin: 10px 0;
+    }
+
+    .card a {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    .pagination {
+      text-align: center;
+      margin: 30px;
+    }
+
+    .pagination button {
+      margin: 0 8px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    .bilibili-link {
+      position: fixed;
+      bottom: 15px;
+      left: 15px;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: color 0.5s;
+    }
+
+    .toggle-style {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      font-size: 1rem;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    /* 黑金风格 */
+    body.blackgold {
+      background: linear-gradient(180deg, #0d0d0d, #1a1a1a);
+      color: #f5d76e;
+    }
+
+    body.blackgold .topbar {
+      color: #0044ff;
+    }
+
+    body.blackgold .card {
+      background: #1a1a1a;
+      color: #f5d76e;
+      border: 1px solid #ffd700;
+    }
+
+    body.blackgold .card h2 {
+      background: rgba(255, 215, 0, 0.2);
+      color: #ffd700;
+    }
+
+    body.blackgold .card a {
+      background: #ffd700;
+      color: #1a1a1a;
+    }
+
+    body.blackgold .pagination button {
+      background: #ffd700;
+      color: #1a1a1a;
+    }
+
+    body.blackgold .bilibili-link {
+      color: #ffd700;
+    }
+
+    body.blackgold .toggle-style {
+      background: #ffd700;
+      color: #1a1a1a;
+    }
+
+    /* 白金风格 */
+    body.whitegold {
+      background: #fdfdfd;
+      color: #555;
+    }
+
+    body.whitegold .topbar {
+      color: #68c3ca;
+    }
+
+    body.whitegold .card {
+      background: #fff;
+      color: #444;
+      border: 1px solid #e0c878;
+    }
+
+    body.whitegold .card h2 {
+      background: #fff8e1;
+      color: #caa468;
+    }
+
+    body.whitegold .card a {
+      background: #caa468;
+      color: #fff;
+    }
+
+    body.whitegold .pagination button {
+      background: #caa468;
+      color: #fff;
+    }
+
+    body.whitegold .bilibili-link {
+      color: #caa468;
+    }
+
+    body.whitegold .toggle-style {
+      background: #caa468;
+      color: #fff;
+    }
+
+    .copyright {
+  text-align: center;
+  font-size: 12px;
+  margin: 16px 0;
+  color: var(--muted);
+  opacity: 0.8;
+}
+  </style>
+</head>
+<body>
+  <div class="topbar">Dragonseed</div>
+
+  <header>
+    <h1>Welcome</h1>
+  </header>
+
+  <main>
+    <section id="videoGallery" class="gallery"></section>
+    <div class="pagination">
+      <button onclick="prevPage()">上一页</button>
+      <span id="pageInfo"></span>
+      <button onclick="nextPage()">下一页</button>
+    </div>
+  </main>
+
+  <a href="https://space.bilibili.com/320825697" target="_blank" class="bilibili-link">哔哩哔哩</a>
+  <div class="copyright">
+  © 2025 Dragonseed. 未经允许禁止转载。
+</div>
+  <button class="toggle-style" onclick="toggleStyle()">切换颜色</button>
+
+  <script>
+    // 视频数据
+    const videos = [
+      {
+        img: "tu/578aab8a-58b1-4f86-a27c-bca787005b28.png",
+        title: "长直无敌，单马尾更是【布料解算】桑朵莱希-G36【ETA】",
+        desc: "music：ETA-modle：少前2-md布料：Ref：rain-motion/camera：NatsumiSan-stage：sablefish",
+        link: "https://pan.baidu.com/s/1VNWOzul0nSgNavbm_4pD0g?pwd=f7gy"
+      },
+      {
+        img: "tu/a548a466297452c0a45c7e7a1df3cbc0a0dd92be.jpg",
+        title: "【LILAC】星尘【布料】",
+        desc: "music：LILAC-modle:椛暗式/星雨梦尘/椛暗/流云景-md:Ref:rain-stage：sablefish-motion：NatsumiSan-camera:Dragonseed",
+        link: "https://pan.baidu.com/s/1e2E3-M1VtPgq5WFdqwdkow?pwd=6jan"
+      },
+      {
+        img: "tu/1fad98680722857a76874725657ff10591ea083e.jpg",
+        title: "辰星 faker 我的bin【大喜】琼弦-欣描红妆",
+        desc: "Model： 尘白禁区/神帝宇-motion：临时映画/Lastimosa-camera：秋燚QY-music：大喜-泠鸢yousa-stage：天使之赐",
+        link: "https://pan.baidu.com/s/1I7PnwAzl2CKuriJkdXYKEg?pwd=5fpm"
+      },
+      {
+        img: "tu/60ed1c534da4f1f9914e00360382df3a3d3f29f3.jpg",
+        title: "健达 情 趣 蛋 【Hype Boy】克罗瑞娜-皎月幽祈",
+        desc: "视频描述内容 4",
+        link: "https://pan.baidu.com/s/1D10n_Zi-mYDTKmVNlZg4jg?pwd=mrfg"
+      }
+    ];
+
+    let currentPage = 1;
+    const pageSize = 4;
+    const gallery = document.getElementById("videoGallery");
+    const pageInfo = document.getElementById("pageInfo");
+
+    function renderPage(page) {
+      gallery.innerHTML = "";
+      const start = (page - 1) * pageSize;
+      const end = start + pageSize;
+      const items = videos.slice(start, end);
+
+      items.forEach(v => {
+        const card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML = `
+          <img src="${v.img}" alt="${v.title}">
+          <h2>${v.title}</h2>
+          <p>${v.desc}</p>
+          <a href="${v.link}" target="_blank">百度网盘下载</a>
+        `;
+        gallery.appendChild(card);
+      });
+
+      pageInfo.innerText = `第 ${currentPage} / ${Math.ceil(videos.length / pageSize)} 页`;
+    }
+
+    function prevPage() {
+      if (currentPage > 1) {
+        currentPage--;
+        renderPage(currentPage);
+      }
+    }
+
+    function nextPage() {
+      if (currentPage < Math.ceil(videos.length / pageSize)) {
+        currentPage++;
+        renderPage(currentPage);
+      }
+    }
+
+    function toggleStyle() {
+      if (document.body.classList.contains("blackgold")) {
+        document.body.classList.remove("blackgold");
+        document.body.classList.add("whitegold");
+        localStorage.setItem("theme", "whitegold");
+      } else {
+        document.body.classList.remove("whitegold");
+        document.body.classList.add("blackgold");
+        localStorage.setItem("theme", "blackgold");
+      }
+    }
+
+    function loadTheme() {
+      const savedTheme = localStorage.getItem("theme") || "blackgold";
+      document.body.classList.add(savedTheme);
+    }
+
+    loadTheme();
+    renderPage(currentPage);
+  </script>
+</body>
+</html>
